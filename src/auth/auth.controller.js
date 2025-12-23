@@ -9,7 +9,7 @@ export const registerController = async (req, res, next) =>{
     }
 };
 
-export const logicController = async (req, res, next) =>{
+export const loginController = async (req, res, next) =>{
     try {
         const result = await authService.login(req.body);
         res.json({ success: true, data: result });
