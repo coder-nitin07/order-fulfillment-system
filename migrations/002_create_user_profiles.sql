@@ -1,0 +1,8 @@
+CREATE TABLE user_profiles (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  auth_user_id UUID NOT NULL UNIQUE,
+  name VARCHAR(255),
+  phone VARCHAR(20),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
