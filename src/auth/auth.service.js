@@ -54,4 +54,10 @@ export const login = async ({ email, password }) =>{
     return { token };
 };
 
-export const verifyToken = async (token) =>{};
+export const verifyToken = async (token) =>{
+    try {
+        return jwt.verify(token, config.auth.jwtSecret);
+    } catch (err) {
+        throw new AppError('Invalid or expired token', 401);
+    }
+};
