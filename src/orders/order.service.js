@@ -42,3 +42,23 @@ export const getOrderById = async (orderId, authUserId) => {
 
     return result.rows[0];
 };
+
+export const markOrderAsPaid = async (orderId) => {
+  const result = await db.query(
+    `
+        UPDATE orders
+        SET status = 'PAID', updated_at = NOW()
+        WHERE id = $1
+        RETURNING *
+    `,
+    [ orderId ]
+  );
+
+  if (!result.rows.length) {
+    const err = new Error('Order not found');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return result.rows[0];
+};

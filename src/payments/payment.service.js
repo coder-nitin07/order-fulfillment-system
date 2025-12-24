@@ -1,4 +1,5 @@
 import pool from "../shared/db.js";
+import { markOrderAsPaid } from '../orders/order.service.js';
 
 export const initiatePayment = async (authUserId, orderId, amount) => {
     const result = await pool.query(
@@ -42,6 +43,13 @@ export const updatePaymentStatus = async (paymentId,authUserId, status) =>{
         const err = new Error('Payment not found');
         err.statusCode = 404;
         throw err;
+    }
+
+    const payment = result.rows[0];
+
+    // Coordination happens here
+    if (status === 'SUCCESS') {
+        await markOrderAsPaid(payment.order_id);
     }
 
     return result.rows[0];
