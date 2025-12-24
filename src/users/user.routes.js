@@ -1,6 +1,6 @@
 import express from 'express';
-import { authMiddleware } from '../auth/auth.middleware';
-import { createProfileController, getProfileController, updateProfileController } from './user.controller';
+import { authMiddleware } from '../auth/auth.middleware.js';
+import { createProfileController, getProfileController, updateProfileController } from './user.controller.js';
 const userRouter = express.Router();
 
 userRouter.post('/profile', authMiddleware, createProfileController);

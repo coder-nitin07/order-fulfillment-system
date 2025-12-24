@@ -2,16 +2,16 @@
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { AppError } from "../shared/error.handler";
-import config from '../shared/config';
-import db from '../shared/db';
+import { AppError } from "../shared/error.handler.js";
+import config from '../shared/config.js';
+import db from '../shared/db.js';
 
 export const register = async ({ email, password, role }) =>{
     const existingUser = await db.query(
         'SELECT id FROM auth_users WHERE email = $1',
         [ email ]
     );
-
+    console.log("first")
     if(existingUser.rows.length > 0){
         throw new AppError('Email already registered', 400);
     }

@@ -2,7 +2,7 @@ import * as paymentService from './payment.service.js';
 
 export const initiatePayment = async (req, res, next) => {
   try {
-    const authUserId = req.user.id;
+    const authUserId = req.user.userId;
     const { orderId, amount } = req.body;
 
     const payment = await paymentService.initiatePayment(

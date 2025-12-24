@@ -1,5 +1,5 @@
-import db from "../shared/db";
-import { AppError } from "../shared/error.handler";
+import db from "../shared/db.js";
+import { AppError } from "../shared/error.handler.js";
 
 export const createUserProfile = async (authUserId, data)=>{
     const existing = await db.query(

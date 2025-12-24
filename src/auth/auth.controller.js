@@ -5,6 +5,7 @@ export const registerController = async (req, res, next) =>{
         const user = await authService.register(req.body);
         res.status(201).json({ success: true, data: user });
     } catch (err) {
+        console.log("ererwfuiwrbiuwv")
         next(err);
     }
 };

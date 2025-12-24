@@ -1,10 +1,10 @@
-import { verifyToken } from "./auth.service";
+import { verifyToken } from "./auth.service.js";
 
 export const authMiddleware = async (req, res, next)=>{
     try {
         const authHeader = req.headers.authorization;
 
-        if(!authHeader || !authHeader.startwith('Bearer')){
+        if(!authHeader || !authHeader.startsWith('Bearer')){
             throw new Error();
         }
 
@@ -14,6 +14,7 @@ export const authMiddleware = async (req, res, next)=>{
         req.user = payload;
         next();
     } catch (err) {
+        console.log("faillng", err)
         res.status(401).json({ success: false, message: 'unauthorized' });
     }
 };

@@ -1,3 +1,4 @@
+import pool from "../shared/db.js";
 
 export const initiatePayment = async (authUserId, orderId, amount) => {
     const result = await pool.query(

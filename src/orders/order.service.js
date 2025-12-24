@@ -1,4 +1,4 @@
-import db from "../shared/db";
+import db from "../shared/db.js";
 
 export const createOrder = async (authUserId, orderData) => {
     const { total_amount } = orderData;
@@ -16,7 +16,7 @@ export const createOrder = async (authUserId, orderData) => {
 };
 
 export const getMyOrders = async (authUserId) => {
-     const result = await pool.query(
+     const result = await db.query(
         `SELECT * FROM orders WHERE auth_user_id = $1 ORDER BY created_at DESC`,
         [ authUserId ]
     );
@@ -25,7 +25,7 @@ export const getMyOrders = async (authUserId) => {
 };
 
 export const getOrderById = async (orderId, authUserId) => {
-    const result = await pool.query(
+    const result = await db.query(
         `
         SELECT *
         FROM orders
