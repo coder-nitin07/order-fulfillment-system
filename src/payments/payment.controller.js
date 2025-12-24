@@ -28,6 +28,24 @@ export const getPaymentsByOrder = async (req, res, next) => {
     );
 
     res.json(payments);
+    console.log(payments, "s");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updatePaymentStatus = async (req, res, next) =>{
+  try {
+    const authUserId = req.user.userId;
+    const { status } = req.body;
+
+    const payment = await paymentService.updatePaymentStatus(
+      req.params.id,
+      authUserId,
+      status
+    );
+
+    res.json(payment);
   } catch (err) {
     next(err);
   }

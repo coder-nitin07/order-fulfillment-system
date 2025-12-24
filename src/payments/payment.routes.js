@@ -5,5 +5,6 @@ const paymentRouter = express.Router();
 
 paymentRouter.post('/', authMiddleware, paymentController.initiatePayment);
 paymentRouter.get('/:orderId', authMiddleware, paymentController.getPaymentsByOrder);
+paymentRouter.patch('/:id/status', authMiddleware, paymentController.updatePaymentStatus);
 
 export default paymentRouter;

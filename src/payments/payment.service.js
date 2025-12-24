@@ -26,3 +26,23 @@ export const getPaymentsByOrder = async (authUserId, orderId) => {
 
     return result.rows;
 };
+
+export const updatePaymentStatus = async (paymentId,authUserId, status) =>{
+    const result = await pool.query(
+        `
+            UPDATE payments
+            SET status = $1
+            WHERE id = $2 AND auth_user_id = $3
+            RETURNING *
+        `,
+        [ status, paymentId, authUserId ]
+    );
+
+    if(!result.rows.length){
+        const err = new Error('Payment not found');
+        err.statusCode = 404;
+        throw err;
+    }
+
+    return result.rows[0];
+};
