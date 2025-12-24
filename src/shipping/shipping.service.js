@@ -1,4 +1,5 @@
 import pool from '../shared/db.js';
+import { sendOrderShippedNotification, sendOrderDeliveredNotification } from '../notifications/notification.service.js';
 
 export const createShipment = async (orderId, authUserId) => {
   const res = await pool.query(
@@ -33,5 +34,14 @@ export const updateShipmentStatus = async (shipmentId, status) => {
     `,
     [ status, shipmentId ]
   );
+
+  if (status === 'SHIPPED') {
+    sendOrderShippedNotification(res.rows[0].order_id, res.rows[0].auth_user_id);
+  }
+
+  if (status === 'DELIVERED') {
+    sendOrderDeliveredNotification(res.rows[0].order_id, res.rows[0].auth_user_id);
+  }
+
   return res.rows[0];
 };

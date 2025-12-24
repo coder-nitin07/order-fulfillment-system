@@ -1,5 +1,6 @@
 import pool from "../shared/db.js";
 import { markOrderAsPaid } from '../orders/order.service.js';
+import { sendOrderPaidNotification } from '../notifications/notification.service.js';
 
 export const initiatePayment = async (authUserId, orderId, amount) => {
     const result = await pool.query(
@@ -50,6 +51,7 @@ export const updatePaymentStatus = async (paymentId,authUserId, status) =>{
     // Coordination happens here
     if (status === 'SUCCESS') {
         await markOrderAsPaid(payment.order_id);
+        sendOrderPaidNotification(payment.order_id, authUserId);
     }
 
     return result.rows[0];
